@@ -10,13 +10,13 @@
     - OpenShift Virtualization"
 
 
-# 🧪 Step-by-Step Demo: Migrating Virtual Machines with Migration Toolkit for Virtualization (MTV)
+# Step-by-Step Demo: Migrating Virtual Machines with Migration Toolkit for Virtualization (MTV)
 
 This document walks you through the end-to-end process of migrating virtual machines from various sources (VMware, RHV, OVAs, or OpenShift Virtualization) to OpenShift using the **Migration Toolkit for Virtualization (MTV)**. Each step includes both **Web Console (UI)** and **Command-Line Interface (CLI)** instructions.
 
 ---
 
-## 🧩 Prerequisites
+## Prerequisites
 
 - OpenShift 4.12+ cluster with cluster-admin privileges
 - OpenShift Virtualization must be installed and configured
@@ -28,14 +28,14 @@ This document walks you through the end-to-end process of migrating virtual mach
 
 ## 1. Install MTV Operator
 
-### 🌐 Web UI
+### Web UI
 1. Open the OpenShift Console.
 2. Go to `Operators > OperatorHub`.
 3. Search for **Migration Toolkit for Virtualization**.
 4. Click **Install** using the namespace `openshift-mtv`.
 5. Use default settings unless custom requirements apply.
 
-### 💻 CLI
+### CLI
 ```bash
 oc new-project openshift-mtv
 oc apply -f https://operatorhub.io/install/mtv-operator.yaml
@@ -47,7 +47,7 @@ oc apply -f https://operatorhub.io/install/mtv-operator.yaml
 
 Providers represent the source and destination virtualization environments.
 
-### 🌐 Web UI
+### Web UI
 1. Navigate to `MTV > Providers > Create Provider`.
 2. Select provider type: `vSphere`, `RHV`, `OVA`, or `OpenShift Virtualization`.
 3. Fill in connection details, such as:
@@ -81,12 +81,12 @@ spec:
 
 Storage maps map source datastores to OpenShift storage classes.
 
-### 🌐 Web UI
+### Web UI
 1. Go to `MTV > Storage Maps > Create`.
 2. Select the source and destination providers.
 3. Map vSphere/RHV datastores to OpenShift PVC-backed StorageClasses.
 
-### 💻 CLI
+### CLI
 ```bash
 oc apply -f storage-map.yaml
 ```
@@ -116,11 +116,11 @@ spec:
 
 Network maps match source VM networks to OpenShift networks (like `pod` or `Multus` networks).
 
-### 🌐 Web UI
+### Web UI
 1. Navigate to `MTV > Network Maps > Create`.
 2. Select source and destination networks and define their relationship.
 
-### 💻 CLI
+### CLI
 ```bash
 oc apply -f network-map.yaml
 ```
@@ -150,14 +150,14 @@ spec:
 
 A migration plan combines providers, storage/network maps, and a list of VMs to be migrated.
 
-### 🌐 Web UI
+### Web UI
 1. Go to `MTV > Migration Plans > Create`.
 2. Enter plan name and select providers.
 3. Choose VMs to migrate.
 4. Assign storage and network maps.
 5. Select migration type: **Cold** (offline) or **Warm** (replicated while online).
 
-### 💻 CLI
+### CLI
 ```bash
 oc apply -f migration-plan.yaml
 ```
@@ -189,7 +189,7 @@ spec:
 
 ## 6. Run the Migration
 
-### 🌐 Web UI
+### Web UI
 1. Open the migration plan from the list.
 2. Click **Start Migration**.
 3. Monitor progress through the UI stages:
@@ -197,7 +197,7 @@ spec:
    - Disk transfer
    - Post-migration boot
 
-### 💻 CLI
+### CLI
 ```bash
 oc annotate plan test-plan forklift.konveyor.io/start=true --overwrite
 ```
@@ -211,18 +211,18 @@ oc get planmigration -n openshift-mtv
 
 ## 7. Validate Migrated VMs
 
-### 🌐 Web UI
+### Web UI
 - Go to `Virtualization > Virtual Machines`.
 - Check VM status, networking, and storage volumes.
 
-### 💻 CLI
+### CLI
 ```bash
 oc get vm -n target-namespace
 ```
 
 ---
 
-## 🔁 Additional Exercises
+## Additional Exercises
 
 ### 🔸 Exercise 1: Warm Migration Test
 1. Modify a migration plan to enable warm migration (`warm: true`).
@@ -236,7 +236,7 @@ oc get vm -n target-namespace
 
 ---
 
-## 📚 References
+## References
 
 - Red Hat MTV Docs: https://access.redhat.com/documentation/en-us/migration_toolkit_for_virtualization/
 - GitHub Forklift Project: https://github.com/kubev2v/forklift
