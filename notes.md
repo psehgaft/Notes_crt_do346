@@ -38,7 +38,7 @@ This document walks you through the end-to-end process of migrating virtual mach
 ### CLI
 ```bash
 oc new-project openshift-mtv
-oc apply -f https://operatorhub.io/install/mtv-operator.yaml
+oc apply -f [mtv-operator.yaml](https://github.com/psehgaft/Notes_crt_do346/blob/main/crds/mtv-operator.yaml)
 ```
 
 ---
